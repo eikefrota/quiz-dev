@@ -9,17 +9,9 @@ Criado com foco no aprendizado e aplicação dos conceitos de **React Native**, 
 
 ---
 
-## 👨‍💻 Equipe
-
-- Eike  
-- Pablo  
-- Matheus  
-
----
-
 ## 🎯 Objetivo
 
-Aplicar na prática os conhecimentos adquiridos em sala de aula — especialmente sobre **React Native** — desenvolvendo um app mobile que promova o aprendizado por meio de quizzes temáticos.
+Aplicar na prática os conhecimentos adquiridos em sala de aula, especialmente sobre **React Native**, desenvolvendo um app mobile que promova o aprendizado por meio de quizzes temáticos.
 
 ---
 
@@ -37,33 +29,74 @@ Aplicar na prática os conhecimentos adquiridos em sala de aula — especialment
 - 🧠 **Pontuação automática**  
   O app calcula a pontuação com base nas respostas corretas.
 
-- 📱 **Performance com React Native**  
-  Fluidez e bom desempenho em diferentes dispositivos móveis.
-
 ---
 
 ## 🖼️ Demonstrações do App
 
 <p align="center">
-  <img src="assets/prototipo/funcionalidade.png" alt="Funcionalidades do QuizDev" width="800"/>
+  <img src="assets/prototipo/funcionalidades.png" alt="Funcionalidades do QuizDev" width="800"/>
 </p>
 
 <p align="center">
-  <img src="assets/prototipo/telas.png" alt="Fluxo de telas do QuizDev" width="800"/>
+  <img src="assets/prototipo/telas.png" alt="Fluxo de Telas do QuizDev" width="800"/>
 </p>
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- React Native
-- JavaScript
-- (Adicione aqui outras libs, como React Navigation, Styled Components, etc.)
+### 🧩 Frontend
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [Context API](https://reactjs.org/docs/context.html)
+- [React Navigation](https://reactnavigation.org/)
+- [Axios](https://axios-http.com/)
+
+### 🔐 Backend
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [JWT (JSON Web Token)](https://jwt.io/) — Autenticação
+
+### 💾 Banco de Dados
+- [MongoDB](https://www.mongodb.com/)
 
 ---
 
 ## 📦 Como executar o projeto
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/quizdev.git
+### 🔹 1. Clonar o repositório
+
+```bash
+git clone https://github.com/seu-usuario/quizdev.git
+```
+### 🔹 2. Rodar o Frontend (App Mobile)
+
+```bash
+cd quizdev/frontend
+npm install
+npx expo start
+```
+Obs: Certifique-se de ter o Expo CLI instalado globalmente
+```bash
+npm install -g expo-cli
+```
+Você pode escanear o QR Code com o aplicativo Expo Go no seu celular para testar o app.
+
+### 🔹 3. Rodar o Backend (API)
+
+```bash
+cd quizdev/backend
+npm install
+npm start
+```
+
+Obs: Lembre-se de configurar um arquivo .env com suas variáveis de ambiente, como:
+```bash
+MONGO_URI=mongodb://localhost:27017/quizdev
+JWT_SECRET=sua_chave_secreta
+PORT=5000
+```
+
+## 📄 Licença
+Este projeto foi desenvolvido para fins educacionais.
+Sinta-se à vontade para usar, adaptar e contribuir com melhorias!
