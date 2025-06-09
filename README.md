@@ -1,8 +1,6 @@
 # 📱 QuizDev
 
-<p align="center">
-  <img src="assets/prototipo/mockup.png" alt="Logo do QuizDev" width="600"/>
-</p>
+![Mockup](https://github.com/eikefrota/quiz-dev/blob/develop/assets/mockup.png)
 
 **QuizDev** é um aplicativo de quizzes interativo, desenvolvido como projeto prático do curso Técnico de Desenvolvimento de Sistemas do **SENAC CE**.  
 Criado com foco no aprendizado e aplicação dos conceitos de **React Native**, o app estimula o conhecimento através da gamificação com uma experiência leve, dinâmica e divertida.
@@ -33,13 +31,9 @@ Aplicar na prática os conhecimentos adquiridos em sala de aula, especialmente s
 
 ## 🖼️ Demonstrações do App
 
-<p align="center">
-  <img src="assets/prototipo/funcionalidades.png" alt="Funcionalidades do QuizDev" width="800"/>
-</p>
+![Funcionalidades](https://github.com/eikefrota/quiz-dev/blob/develop/assets/funcionalidades.png)
 
-<p align="center">
-  <img src="assets/prototipo/telas.png" alt="Fluxo de Telas do QuizDev" width="800"/>
-</p>
+![Fluxo de Telas](https://github.com/eikefrota/quiz-dev/blob/develop/assets/telas.png)
 
 ---
 
