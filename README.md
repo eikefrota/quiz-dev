@@ -61,12 +61,12 @@ Aplicar na prática os conhecimentos adquiridos em sala de aula, especialmente s
 ### 🔹 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/quizdev.git
+git clone https://github.com/eikefrota/quiz-dev.git
 ```
 ### 🔹 2. Rodar o Frontend (App Mobile)
 
 ```bash
-cd quizdev/frontend
+cd quizdev/mobile
 npm install
 npx expo start
 ```
