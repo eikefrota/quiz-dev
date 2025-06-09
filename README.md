@@ -1,7 +1,7 @@
-﻿# 📱 QuizDev
+# 📱 QuizDev
 
 <p align="center">
-  <img src="assets/mockup.png" alt="Logo do QuizDev" width="600"/>
+  <img src="assets/prototipo/mockup.png" alt="Logo do QuizDev" width="600"/>
 </p>
 
 **QuizDev** é um aplicativo de quizzes interativo, desenvolvido como projeto prático do curso Técnico de Desenvolvimento de Sistemas do **SENAC CE**.  
@@ -45,11 +45,11 @@ Aplicar na prática os conhecimentos adquiridos em sala de aula — especialment
 ## 🖼️ Demonstrações do App
 
 <p align="center">
-  <img src="assets/funcionalidades.png" alt="Funcionalidades do QuizDev" width="800"/>
+  <img src="assets/prototipo/funcionalidade.png" alt="Funcionalidades do QuizDev" width="800"/>
 </p>
 
 <p align="center">
-  <img src="assets/telas.png" alt="Fluxo de telas do QuizDev" width="800"/>
+  <img src="assets/prototipo/telas.png" alt="Fluxo de telas do QuizDev" width="800"/>
 </p>
 
 ---
