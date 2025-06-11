@@ -1,0 +1,33 @@
+npm install cors
+
+Adicionar
+
+curl -X POST http://localhost:3000/api/profissionais ^
+//-H "Content-Type: application/json" ^
+//-d "{\"nome\": \"João Silva\", \"profissao\": \"Desenvolvedor\", \"salario\": 5000.00, \"setor\": \"TI\", \"cidade\": \"São Paulo\", \"estado\": \"SP\"}"
+
+Recuperar
+
+curl http://localhost:3000/profissionais
+
+Recuperar pela matricula
+
+curl http://localhost:3000/profissionais/123
+
+Atualizar
+
+//curl -X PUT http://localhost:3000/profissionais/123 ^
+//-H "Content-Type: application/json" ^
+//-d "{\"nome\":\"João Silva\",\"profissao\":\"Arquiteto\",\"salario\":6000,\"setor\":\"Projetos\",\"cidade\":\"Campinas\",\"estado\":\"SP\"}"
+
+Excluir
+
+curl -X DELETE http://localhost:3000/profissionais/123
+
+--------############# MOBILE #############--------
+
+Instalar o expo-cli: npm install -g expo-cli
+Criar o projeto em react-native: npx create-expo-app mobile
+Entra na pasta do projeto: cd mobile
+Executar o projeto: npx expo start
+ 
