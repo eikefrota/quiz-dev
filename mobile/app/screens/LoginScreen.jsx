@@ -48,7 +48,7 @@ export default function LoginScreen() {
       
       <Button title="Entrar" color={colors.primary} onPress={login} />
       <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.link}>
-        <Text style={styles.linkText}>Não 1 tem conta? Cadastre-se</Text>
+        <Text style={styles.linkText}>Não possui conta? Cadastre-se</Text>
       </TouchableOpacity>
     </View>
   );

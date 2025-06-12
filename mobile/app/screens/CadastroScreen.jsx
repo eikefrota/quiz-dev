@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import api from '../api/api';
 import { colors, fonts } from '../constants/theme';
@@ -52,6 +52,9 @@ export default function CadastroScreen() {
         placeholderTextColor={colors.textLight}
       />
       <Button title="Cadastrar" color={colors.primary} onPress={cadastrar} />
+      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.link}>
+        <Text style={styles.linkText}>Já possui conta? Faça login</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -71,5 +74,13 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     color: colors.textDark,
     fontFamily: fonts.regular,
+  },
+  link: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  linkText: {
+    color: colors.primary,
+    fontWeight: '600',
   },
 });
