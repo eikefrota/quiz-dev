@@ -1,30 +1,39 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { colors, fonts } from './theme'; // ajuste o caminho se necessário
+import { colors, fonts } from './theme'; // Ajuste o caminho se necessário
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bem-vindo à tela Home Leo!</Text>
+    <LinearGradient
+      colors={['#510870', '#a228b0']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.container}
+    >
+      <Image
+        source={require('../assets/images/logo.png')} // ajuste o caminho conforme sua estrutura
+        style={{ width: 400, height: 400, marginBottom: 40 }}
+        resizeMode="contain"
+      />
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.buttonText}>Ir para Login</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { marginTop: 20 }]} onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={styles.buttonText}>Cadastrar Usuário</Text>
+      <TouchableOpacity style={[styles.button]} onPress={() => navigation.navigate('Cadastro')}>
+        <Text style={styles.buttonText}>Cadastro</Text>
       </TouchableOpacity>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -37,14 +46,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: colors.primary,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    backgroundColor: colors.white,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
     borderRadius: 12,
+    width: '80%',
+    marginTop: 30,
   },
   buttonText: {
-    color: colors.white,
+    color: colors.textPurple,
     fontSize: 18,
     fontFamily: fonts.bold,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
