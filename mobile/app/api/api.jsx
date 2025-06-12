@@ -1,6 +1,9 @@
-import axios from "axios";
+import axios from 'axios';
 
-export default axios.create({
-    baseURL: "http://10.0.30.223:3000/api",
-    timeout: 5000,
+const api = axios.create({
+  baseURL: 'http://192.168.100.26:3000/api',
+  timeout: 5000,
 });
+
+export default api;
+

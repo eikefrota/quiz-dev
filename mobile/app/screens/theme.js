@@ -1,3 +1,4 @@
+// styles/theme.js
 export const colors = {
   primary: '#1e3a8a',       // azul escuro
   primaryLight: '#3b82f6',  // azul claro
