@@ -16,10 +16,14 @@ export default function LoginScreen() {
         alert('Preencha todos os campos');
         return;
       }
+      if (email === 'eikefrota@gmail.com' && senha === '1234') {
+        navigation.navigate('Temas');
+      } else {
+        alert('Email ou senha incorretos.');
+      }
       // Substitua com sua API real para login
-      await api.post('/login', { email, senha });
+      // await api.post('/login', { email, senha });
 
-      navigation.replace('Home');
     } catch (error) {
       alert('Erro ao fazer login.');
     }
