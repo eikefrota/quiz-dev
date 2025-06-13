@@ -13,7 +13,6 @@ class Usuario  {
             id: this.id,
             nome: this.nome,
             email: this.email,
-            password: this.password,
             historicoPontuacao: this.historicoPontuacoes
         };
     }

@@ -2,12 +2,12 @@ const eepository = require('../repositories/usuarioRepository');
 
 class usuarioService {
     static async getAll() {
-        const usuarios = await repository.findAll();
+        const usuarios = await repository.getAll();
         return usuarios;
     }
 
     static async getById (id) {
-        const usuarios = await repositoru.findById();
+        const usuarios = await repositoru.getById();
         return usuarios;
     }
 
@@ -28,4 +28,4 @@ class usuarioService {
 
 }
 
-module.exports = usuarioService;
+module.exports = usuarioService

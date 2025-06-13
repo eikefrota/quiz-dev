@@ -3,11 +3,11 @@ const Usuario = require('../models/usuarioModel');
 
 class UsuarioRepository {
 
-    async findAll() {
+    async getAll() {
         const result = await db.query(`SELEC * FROM usuarios`);
         return result.rows.map(row => new Usuario(row));
     }
-    async findById(id) {
+    async getById(id) {
         const result = await db.query(`SELECT * FROM usuarios WHERE id = $1`, [id]);
         return result.rows[0] ? new Usuario (result.rows[0]) : null;
     }
