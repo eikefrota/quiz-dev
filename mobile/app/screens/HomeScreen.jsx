@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { colors, fonts } from './theme'; // Ajuste o caminho se necessário
+import { colors, fonts } from '../constants/theme'; // Ajuste o caminho se necessário
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -16,7 +16,7 @@ export default function HomeScreen() {
     >
       <Image
         source={require('../assets/images/logo.png')} // ajuste o caminho conforme sua estrutura
-        style={{ width: 400, height: 400, marginBottom: 40 }}
+        style={{ width: 500, height: 500 }}
         resizeMode="contain"
       />
 
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   buttonText: {
-    color: colors.textPurple,
+    color: colors.purple,
     fontSize: 18,
     fontFamily: fonts.bold,
     fontWeight: 'bold',

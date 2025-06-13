@@ -4,10 +4,11 @@ export const colors = {
   border: '#ccc',
   textDark: '#333',
   textLight: '#888',
-  white: '#fff',
-  background: '#f2f2f2',
+  background: 'linear-gradient(90deg, #510870, #a228b0)',
   error: '#ff4d4d',
   success: '#4BB543',
+  white: '#fff',
+  purple: '#5B1CAE',
 };
 
 export const fonts = {

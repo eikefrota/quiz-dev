@@ -6,9 +6,8 @@ export const colors = {
   white: '#fff',
   success: '#10b981',       // verde
   error: '#ef4444',         // vermelho
-  textDark: '#111827',      // quase preto
-  textLight: '#6b7280',
-  textPurple: '#5B1CAE',     // cinza escuro
+  textPurple: '#5b1cae',      // quase preto
+  textLight: '#6b7280',    // cinza escuro
   border: '#d1d5db',        // cinza borda
 };
 
