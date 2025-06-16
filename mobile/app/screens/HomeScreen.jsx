@@ -21,11 +21,11 @@ export default function HomeScreen() {
       />
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={[styles.button]} onPress={() => navigation.navigate('Cadastro')}>
-        <Text style={styles.buttonText}>Cadastro</Text>
+        <Text style={styles.buttonText}>CADASTRO</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.purple,
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: fonts.bold,
     fontWeight: 'bold',
     textAlign: 'center',

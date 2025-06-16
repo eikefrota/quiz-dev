@@ -17,7 +17,7 @@ export default function LoginScreen() {
         return;
       }
       if (email === 'eikefrota@gmail.com' && senha === '1234') {
-        navigation.navigate('Temas');
+        navigation.navigate('Inicio');
       } else {
         alert('Email ou senha incorretos.');
       }
