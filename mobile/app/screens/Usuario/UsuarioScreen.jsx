@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import api from '../api/api';
-import { colors, fonts } from '../constants/theme';
+import api from '../../api/api';
+import { colors, fonts } from '../../constants/theme';
 
 export default function UsuarioScreen() {
   const navigation = useNavigation();

@@ -2,12 +2,12 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/LoginScreen';
-import CadastroScreen from '../screens/CadastroScreen';
-import TemaScreen from '../screens/TemaScreen';
-import InicioScreen from '../screens/InicioScreen';
-import UsuarioScreen from '../screens/UsuarioScreen';
+import HomeScreen from '../screens/Home/HomeScreen';
+import LoginScreen from '../screens/Login/LoginScreen';
+import CadastroScreen from '../screens/Cadastro/CadastroScreen';
+import TemaScreen from '../screens/Temas/TemaScreen';
+import InicioScreen from '../screens/Inicio/InicioScreen';
+import UsuarioScreen from '../screens/Usuario/UsuarioScreen';
 import SuccessScreen from '../screens/SuccessScreen';
 import ErrorScreen from '../screens/ErrorScreen';
 
@@ -23,8 +23,6 @@ export default function AppNavigator() {
         <Stack.Screen name="Inicio" component={InicioScreen} />
         <Stack.Screen name="Usuario" component={UsuarioScreen} />
         <Stack.Screen name="Temas" component={TemaScreen} />
-        <Stack.Screen name="Success" component={SuccessScreen} />
-        <Stack.Screen name="Error" component={ErrorScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

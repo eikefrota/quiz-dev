@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { colors, fonts } from '../constants/theme';
+import { colors, fonts } from '../../constants/theme';
 
 export default function TemaScreen() {
   const navigation = useNavigation();

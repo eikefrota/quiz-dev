@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import api from '../api/api';
-import { colors, fonts } from '../constants/theme';
+import api from '../../api/api';
+import { colors, fonts } from '../../constants/theme';
 
 export default function CadastroScreen() {
   const navigation = useNavigation();
