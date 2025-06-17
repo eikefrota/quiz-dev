@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import api from '../../api/api';
-import { colors, fonts } from '../../constants/theme';
+import { useNavigation } from '@react-navigation/native';
+import api from '../api/api';
+import { colors, fonts } from '../constants/theme';
 
-export default function LoginScreen() {
+export default function UsuarioScreen() {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
+  // Substitua pelos dados reais do usuário logado
+  const [nome, setNome] = useState('Eike');
+  const [email, setEmail] = useState('eikefrota@gmail.com');
   const [senha, setSenha] = useState('');
 
-  const login = async () => {
+  const salvar = async () => {
     try {
-      if (!email || !senha) {
-        alert('Preencha todos os campos');
+      if (!nome || !email) {
+        Alert.alert('Atenção', 'Nome e email são obrigatórios.');
         return;
       }
-      if (email === 'eikefrota@gmail.com' && senha === '1234') {
-        navigation.navigate('Inicio');
-      } else {
-        alert('Email ou senha incorretos.');
-      }
-      // Substitua com sua API real para login
-      // await api.post('/login', { email, senha });
-
+      // Exemplo de chamada à API (ajuste endpoint conforme necessário)
+      await api.put('/usuarios/1', { nome, email, senha: senha || undefined });
+      Alert.alert('Sucesso', 'Dados atualizados com sucesso!');
+      navigation.goBack();
     } catch (error) {
-      alert('Erro ao fazer login.');
+      Alert.alert('Erro', 'Não foi possível atualizar os dados.');
     }
   };
 
@@ -37,9 +35,14 @@ export default function LoginScreen() {
       style={styles.container}
     >
       <View style={styles.inner}>
-
-        <Text style={styles.title}>Login</Text>
-
+        <Text style={styles.title}>Editar Perfil</Text>
+        <TextInput
+          placeholder="Nome"
+          value={nome}
+          onChangeText={setNome}
+          style={styles.input}
+          placeholderTextColor={colors.textLight}
+        />
         <TextInput
           placeholder="Email"
           value={email}
@@ -48,23 +51,20 @@ export default function LoginScreen() {
           style={styles.input}
           placeholderTextColor={colors.textLight}
         />
-
         <TextInput
-          placeholder="Senha"
+          placeholder="Nova senha"
           value={senha}
           onChangeText={setSenha}
           secureTextEntry
           style={styles.input}
           placeholderTextColor={colors.textLight}
         />
-        <TouchableOpacity style={styles.button} onPress={login}>
-          <Text style={styles.buttonText}>Entrar</Text>
+        <TouchableOpacity style={styles.button} onPress={salvar}>
+          <Text style={styles.buttonText}>Salvar</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.link}>
-          <Text style={styles.linkText}>Não possui conta? Cadastre-se</Text>
+        <TouchableOpacity style={styles.link} onPress={() => navigation.goBack()}>
+          <Text style={styles.linkText}>Cancelar</Text>
         </TouchableOpacity>
-      
       </View>
     </LinearGradient>
   );
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'center', // centraliza verticalmente
-    alignItems: 'center',     // centraliza horizontalmente
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inner: {
     width: '100%',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   title: {
-    fontSize: 40,
+    fontSize: 36,
     color: colors.white,
     fontWeight: 'bold',
     marginBottom: 32,

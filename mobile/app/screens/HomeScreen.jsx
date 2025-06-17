@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import { colors, fonts } from '../../constants/theme'; // Ajuste o caminho se necessário
+import { colors, fonts } from '../constants/theme'; // Ajuste o caminho se necessário
+import HomeScreen from '../screens/Home/HomeScreen.jsx';
 
 export default function HomeScreen() {
   const navigation = useNavigation();

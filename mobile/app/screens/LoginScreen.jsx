@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import api from '../../api/api';
-import { colors, fonts } from '../../constants/theme';
+import api from '../api/api';
+import { colors, fonts } from '../constants/theme';
 
-export default function CadastroScreen() {
+export default function LoginScreen() {
   const navigation = useNavigation();
-  const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const cadastrar = async () => {
+  const login = async () => {
     try {
-      if (!nome || !email || !senha) {
+      if (!email || !senha) {
         alert('Preencha todos os campos');
         return;
       }
-      await api.post('/usuarios', { nome, email, senha });
-      navigation.replace('Login');
+      if (email === 'eikefrota@gmail.com' && senha === '1234') {
+        navigation.navigate('Inicio');
+      } else {
+        alert('Email ou senha incorretos.');
+      }
+      // Substitua com sua API real para login
+      // await api.post('/login', { email, senha });
+
     } catch (error) {
-      alert('Erro ao cadastrar usuário.');
+      alert('Erro ao fazer login.');
     }
   };
 
@@ -32,14 +37,9 @@ export default function CadastroScreen() {
       style={styles.container}
     >
       <View style={styles.inner}>
-        <Text style={styles.title}>Cadastro</Text>
-        <TextInput
-          placeholder="Nome"
-          value={nome}
-          onChangeText={setNome}
-          style={styles.input}
-          placeholderTextColor={colors.textLight}
-        />
+
+        <Text style={styles.title}>Login</Text>
+
         <TextInput
           placeholder="Email"
           value={email}
@@ -48,6 +48,7 @@ export default function CadastroScreen() {
           style={styles.input}
           placeholderTextColor={colors.textLight}
         />
+
         <TextInput
           placeholder="Senha"
           value={senha}
@@ -56,12 +57,14 @@ export default function CadastroScreen() {
           style={styles.input}
           placeholderTextColor={colors.textLight}
         />
-        <TouchableOpacity style={styles.button} onPress={cadastrar}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
+        <TouchableOpacity style={styles.button} onPress={login}>
+          <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.link}>
-          <Text style={styles.linkText}>Já possui conta? Faça login</Text>
+        
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.link}>
+          <Text style={styles.linkText}>Não possui conta? Cadastre-se</Text>
         </TouchableOpacity>
+      
       </View>
     </LinearGradient>
   );
