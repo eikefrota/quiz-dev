@@ -8,8 +8,7 @@ import CadastroScreen from '../screens/Cadastro/CadastroScreen';
 import TemaScreen from '../screens/Temas/TemaScreen';
 import InicioScreen from '../screens/Inicio/InicioScreen';
 import UsuarioScreen from '../screens/Usuario/UsuarioScreen';
-import SuccessScreen from '../screens/SuccessScreen';
-import ErrorScreen from '../screens/ErrorScreen';
+
 
 const Stack = createNativeStackNavigator();
 
