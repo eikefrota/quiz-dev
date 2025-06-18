@@ -17,8 +17,8 @@ const TimeComponent = () => {
     const timerId = setInterval(() => {
       setTime(new Date());
     }, 1000);
-    return () => clearInterval(timerId); // Limpeza do intervalo
-  }, []); // Array vazio para rodar apenas uma vez
+    return () => clearInterval(timerId); 
+  }, []); 
 
   return (
     <View style={styles.container}>

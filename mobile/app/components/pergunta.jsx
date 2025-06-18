@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
+
+export default function TemaScreen() {
+  const [tema, setTema] = useState(null);
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {!tema && (
+        <>
+          <Button title="Futebol" onPress={() => setTema('futebol')} />
+          {/* Adicione outros temas aqui */}
+        </>
+      )}
+      {tema === 'futebol' && <PerguntaFutebol />}
+      {/* Você pode adicionar lógica para outros temas aqui */}
+    </View>
+  );
+}
+
 
 const PerguntaFutebol = () => {
   const [respostaSelecionada, setRespostaSelecionada] = useState(null);
   const [respostaCorreta, setRespostaCorreta] = useState(false);
 
-  const pergunta = "quem venceu o campeonao cearense de 2015?";
+  const pergunta = "Quem venceu o campeonato cearense de 2015?";
   const opcoes = [
     "ceara",
     "uniclinique",
@@ -59,4 +77,3 @@ const styles = StyleSheet.create({
   resultado: { marginTop: 20, fontSize: 18, fontWeight: 'bold' }
 });
 
-export default PerguntaFutebol;
