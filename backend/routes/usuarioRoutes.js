@@ -77,53 +77,55 @@ class UsuarioRoutes {
         /**
          * @swagger
          * /usuarios/{id}:
-         *      put:
-         *          sumary: Atualiza o usuario
-         *          tags: [usuarios]
-         *          parameters:
-         *              - in: path
-         *                name: id
-         *                required: true
-         *                schema: 
-         *                type: string
-         *          requestBody:
-         *            required: true
-         *            content:
-         *              application/json:
-         *                schema:
-         *                        type: object
-         *                        properties:
-         *                          nome:
-         *                              type: string
-         *                          email: 
-         *                              type: string
-         *                          password:
-         *                              type: string
-         *                          historico_pontuacoes:
-         *                              type: JSONB
-         *          responses: 
-         *              200:
-         *                  description: Usuario atualizado com sucesso
-         *              404:
-         *                  description: usuario não encontrado      
+         *   put:
+         *     summary: Atualiza o usuario
+         *     tags: [Usuarios]
+         *     parameters:
+         *       - in: path
+         *         name: id
+         *         required: true
+         *         schema:
+         *           type: string
+         *     requestBody:
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             type: object
+         *             properties:
+         *               nome:
+         *                 type: string
+         *               email:
+         *                 type: string
+         *               password:
+         *                 type: string
+         *               historico_pontuacoes:
+         *                 type: object
+         *     responses:
+         *       200:
+         *         description: Usuario atualizado com sucesso
+         *       404:
+         *         description: usuario não encontrado
          */
         this.router.put('/:id', ValidateUsuario.validate, controller.update)
 
         /**
          * @swagger
-         *  /usuarios/{id}
-         *      delete:
-         *        summary: Remove o usuario
-         *        tags: [Usuarios]
-         *        parameters: 
-         *          - in: path
-         *            name: id
-         *            required: true
-         *            schema: 
-         *              type: string
-         *          responses:
-         *              204: 
-         *                description: Usuario removido com sucesso
+         * /usuarios/{id}:
+         *   delete:
+         *     summary: Remove o usuario
+         *     tags: [Usuarios]
+         *     parameters:
+         *       - in: path
+         *         name: id
+         *         required: true
+         *         schema:
+         *           type: string
+         *     responses:
+         *       204:
+         *         description: Usuario removido com sucesso
+         *       404:
+         *         description: Usuario não encontrado
          */
         this.router.delete('/:id', controller.delete)
     }
