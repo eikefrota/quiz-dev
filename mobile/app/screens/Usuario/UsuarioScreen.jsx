@@ -1,17 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../api/api';
 import { colors, fonts } from '../../constants/theme';
 import styles from './UsuarioScreenStyles'; // Importando os estilos
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function UsuarioScreen() {
   const navigation = useNavigation();
-  // Substitua pelos dados reais do usuário logado
-  const [nome, setNome] = useState('Eike');
-  const [email, setEmail] = useState('eikefrota@gmail.com');
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [usuarioId, setUsuarioId] = useState(null);
+
+  useEffect(() => {
+    const carregarUsuario = async () => {
+      const usuarioSalvo = await AsyncStorage.getItem('usuario');
+      if (usuarioSalvo) {
+        const usuario = JSON.parse(usuarioSalvo);
+        setNome(usuario.nome);
+        setEmail(usuario.email);
+        setUsuarioId(usuario.id);
+      }
+    };
+    carregarUsuario();
+  }, []);
 
   const salvar = async () => {
     try {
@@ -19,8 +33,7 @@ export default function UsuarioScreen() {
         Alert.alert('Atenção', 'Nome e email são obrigatórios.');
         return;
       }
-      // Exemplo de chamada à API (ajuste endpoint conforme necessário)
-      await api.put('/usuarios/1', { nome, email, senha: senha || undefined });
+      await api.put(`/usuarios/${usuarioId}`, { nome, email, password: senha || undefined });
       Alert.alert('Sucesso', 'Dados atualizados com sucesso!');
       navigation.goBack();
     } catch (error) {

@@ -1,10 +1,10 @@
 class Usuario  {
-    constructor ({id, nome, email, password, historicoPontuacoes}) {
+    constructor ({id, nome, email, password, historico_pontuacoes}) {
         this.id = id
         this.nome = nome
         this.email = email
         this.password = password
-        this.historicoPontuacoes = historicoPontuacoes
+        this.historico_pontuacoes = historico_pontuacoes
     };
 
 
@@ -13,7 +13,7 @@ class Usuario  {
             id: this.id,
             nome: this.nome,
             email: this.email,
-            historicoPontuacao: this.historicoPontuacoes
+            historico_pontuacoes: this.historico_pontuacoes
         };
     }
 }

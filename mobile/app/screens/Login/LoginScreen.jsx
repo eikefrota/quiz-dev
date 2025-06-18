@@ -5,28 +5,27 @@ import { LinearGradient } from 'expo-linear-gradient';
 import api from '../../api/api';
 import { colors, fonts } from '../../constants/theme';
 import styles from './LoginScreenStyles'; // Importando os estilos
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [password, setPassword] = useState('');
 
   const login = async () => {
     try {
-      if (!email || !senha) {
+      if (!email || !password) {
         alert('Preencha todos os campos');
         return;
       }
-      if (email === 'eikefrota@gmail.com' && senha === '1234') {
+      const response = await api.post('/usuarios/login', { email, password });
+      if (response.status === 200) {
+        // Salva o usuário retornado no AsyncStorage
+        await AsyncStorage.setItem('usuario', JSON.stringify(response.data.usuario));
         navigation.navigate('Inicio');
-      } else {
-        alert('Email ou senha incorretos.');
       }
-      // Substitua com sua API real para login
-      // await api.post('/login', { email, senha });
-
     } catch (error) {
-      alert('Erro ao fazer login.');
+      alert('Email ou senha incorretos.');
     }
   };
 
@@ -52,8 +51,8 @@ export default function LoginScreen() {
 
         <TextInput
           placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
+          value={password}
+          onChangeText={setPassword}
           secureTextEntry
           style={styles.input}
           placeholderTextColor={colors.textLight}

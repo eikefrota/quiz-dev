@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
-import api from '../../api/api';
-import { colors, fonts } from '../../constants/theme';
-import styles from './InicioScreenStyles'; // Importando os estilos
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './InicioScreenStyles';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const carregarUsuario = async () => {
+      const usuarioSalvo = await AsyncStorage.getItem('usuario');
+      if (usuarioSalvo) {
+        const usuario = JSON.parse(usuarioSalvo);
+        setUsername(usuario.nome);
+      }
+    };
+    carregarUsuario();
+  }, []);
+
   return (
     <LinearGradient
       colors={['#510870', '#a228b0']}
@@ -16,14 +28,13 @@ export default function HomeScreen() {
       style={styles.container}
     >
       <View style={styles.avatarContainer}>
-        {/* Ícone de usuário genérico */}
         <Image
-          source={require('../../assets/images/user-icon.png')} 
+          source={require('../../assets/images/user-icon.png')}
           style={styles.avatar}
         />
       </View>
 
-      <Text style={styles.username}>Eike</Text>
+      <Text style={styles.username}>{username}</Text>
       
       <TouchableOpacity
         style={styles.button}
@@ -41,4 +52,5 @@ export default function HomeScreen() {
     </LinearGradient>
   );
 }
+
 

@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
     },
+    username: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: colors.white,
+    marginBottom: 100,
+  },
 });
 
 export default styles;

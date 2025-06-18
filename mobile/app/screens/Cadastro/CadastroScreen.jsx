@@ -4,23 +4,33 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../../api/api';
 import styles from './CadastroScreenStyles'; // Importando os estilos
+import { colors, fonts } from '../../constants/theme';
 
 export default function CadastroScreen() {
   const navigation = useNavigation();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [password, setPassword] = useState('');
 
   const cadastrar = async () => {
     try {
-      if (!nome || !email || !senha) {
+      if (!nome || !email || !password) {
         alert('Preencha todos os campos');
         return;
       }
-      await api.post('/usuarios', { nome, email, senha });
+      await api.post('/usuarios', { nome, email, password });
+      alert('Usuário cadastrado com sucesso!');
       navigation.replace('Login');
     } catch (error) {
-      alert('Erro ao cadastrar usuário.');
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error === 'Email já cadastrado'
+      ) {
+        alert('Já existe um usuário cadastrado com esse email.');
+      } else {
+        alert('Erro ao cadastrar usuário.');
+      }
     }
   };
 
@@ -50,8 +60,8 @@ export default function CadastroScreen() {
         />
         <TextInput
           placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
+          value={password}
+          onChangeText={setPassword}
           secureTextEntry
           style={styles.input}
           placeholderTextColor={colors.textLight}

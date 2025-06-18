@@ -33,6 +33,9 @@ class UsuarioController {
             const usuarios = await usuarioService.create(usuario);
             return res.status(201).json({message: 'Usuario criado com sucesso', usuario: usuarios});
         } catch (error) {
+            if (error.message === 'Email já cadastrado') {
+                return res.status(400).json({error: 'Email já cadastrado'});
+            }
             console.error('Erro ao criar usuario', error);
             return res.status(400).json({error: 'Erro ao criar usuario'});
         }
