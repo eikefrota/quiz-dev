@@ -1,6 +1,10 @@
 const express = require('express');
 const controller = require('../controllers/usuarioController');
 const ValidateUsuario = require('../middleware/validateUsuario');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || '7670783fa7ecc5d27f3629cb644d294f3ca7cce8cff5a49fcdd08d2d06281570f09de329a2d5b6e0105c500a0e145fb6a188a53f99a69114ae82bb6c44117053';
+const authenticateToken = require('../middleware/authMiddleware');
+
 
 class UsuarioRoutes {
     constructor() {
@@ -40,7 +44,7 @@ class UsuarioRoutes {
          *       404: 
          *         description: Usuario não encontrado
          */
-        this.router.get('/:id', controller.getById);
+        this.router.get('/:id', authenticateToken, controller.getById);
 
         /**
          * @swagger
@@ -107,7 +111,7 @@ class UsuarioRoutes {
          *       404:
          *         description: usuario não encontrado
          */
-        this.router.put('/:id', ValidateUsuario.validateUpdate, controller.update)
+        this.router.put('/:id', authenticateToken, ValidateUsuario.validateUpdate, controller.update)
 
         /**
          * @swagger
@@ -127,14 +131,20 @@ class UsuarioRoutes {
          *       404:
          *         description: Usuario não encontrado
          */
-        this.router.delete('/:id', controller.delete)
+        this.router.delete('/:id', authenticateToken, controller.delete)
 
         this.router.post('/login', async (req, res) => {
             const { email, password } = req.body;
             const usuarios = await require('../repositories/usuarioRepository').getAll();
             const usuario = usuarios.find(u => u.email === email && u.password === password);
             if (usuario) {
-                return res.status(200).json({ message: 'Login realizado com sucesso', usuario });
+                // Gera o token JWT
+                const token = jwt.sign(
+                    { id: usuario.id, email: usuario.email, nome: usuario.nome },
+                    JWT_SECRET,
+                    { expiresIn: '1h' }
+                );
+                return res.status(200).json({ message: 'Login realizado com sucesso', token, usuario });
             } else {
                 return res.status(401).json({ message: 'Email ou senha incorretos' });
             }

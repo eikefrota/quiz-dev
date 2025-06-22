@@ -1,4 +1,6 @@
 const usuarioService = require('../services/usuarioService');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || '7670783fa7ecc5d27f3629cb644d294f3ca7cce8cff5a49fcdd08d2d06281570f09de329a2d5b6e0105c500a0e145fb6a188a53f99a69114ae82bb6c44117053';
 
 class UsuarioController {
     async getAll(req, res) {
@@ -31,7 +33,12 @@ class UsuarioController {
         try {
             const usuario = req.body;
             const usuarios = await usuarioService.create(usuario);
-            return res.status(201).json({message: 'Usuario criado com sucesso', usuario: usuarios});
+            const token = jwt.sign(
+                { id: usuario.id, email: usuario.email, nome: usuario.nome },
+            JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+            return res.status(201).json({message: 'Usuario criado com sucesso',token , usuario: usuarios});
         } catch (error) {
             if (error.message === 'Email já cadastrado') {
                 return res.status(400).json({error: 'Email já cadastrado'});
@@ -40,6 +47,8 @@ class UsuarioController {
             return res.status(400).json({error: 'Erro ao criar usuario'});
         }
     }
+
+
 
     async update(req, res) {
         try {
@@ -74,5 +83,4 @@ class UsuarioController {
     }
 }
 }
-
 module.exports = new UsuarioController();
