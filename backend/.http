@@ -35,3 +35,6 @@ Content-Type: application/json
 
 ### Deletar usuário
 DELETE http://localhost:3000/api/usuarios/3
+
+### Listar perguntas da API
+GET http://localhost:3000/api/perguntas
