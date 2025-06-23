@@ -149,6 +149,9 @@ class UsuarioRoutes {
                 return res.status(401).json({ message: 'Email ou senha incorretos' });
             }
         });
+
+        this.router.post('/solicitar-otp', controller.solicitarOtp);
+        this.router.post('/verificar-otp', controller.verificarOtp);
     }
 
     getRouter() {

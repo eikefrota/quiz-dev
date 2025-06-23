@@ -1,6 +1,9 @@
 const usuarioService = require('../services/usuarioService');
+const emailService = require('../services/emailService');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET || '7670783fa7ecc5d27f3629cb644d294f3ca7cce8cff5a49fcdd08d2d06281570f09de329a2d5b6e0105c500a0e145fb6a188a53f99a69114ae82bb6c44117053';
+
+const otpStore = {}; // Em produção, use Redis ou banco
 
 class UsuarioController {
     async getAll(req, res) {
@@ -82,5 +85,31 @@ class UsuarioController {
         return res.status(400).json({error: 'Erro ao remover usuario'});
     }
 }
+
+    async solicitarOtp(req, res) {
+        const { email } = req.body;
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        otpStore[email] = otp;
+        await emailService(email, otp);
+        res.status(200).json({ message: 'OTP enviado para o e-mail.' });
+    }
+
+    async verificarOtp(req, res) {
+        const { email, otp, nome, password } = req.body;
+        if (otpStore[email] === otp) {
+            delete otpStore[email];
+            // Cria o usuário após OTP válido
+            const usuario = await usuarioService.create({ nome, email, password, historico_pontuacoes: {} });
+            const token = jwt.sign(
+                { id: usuario.id, email: usuario.email, nome: usuario.nome },
+                JWT_SECRET,
+                { expiresIn: '1h' }
+            );
+            return res.status(201).json({ message: 'Usuário criado com sucesso', token, usuario });
+        } else {
+            return res.status(400).json({ message: 'OTP inválido.' });
+        }
+    }
 }
+
 module.exports = new UsuarioController();

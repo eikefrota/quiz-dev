@@ -9,14 +9,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiO
 
 ###
 
+POST http://localhost:3000/api/usuarios/solicitar-otp
+Content-Type: application/json
+
+{
+    "email": "pabloangelons.06@gmail.com"
+}
 ### Criar novo usuário
 POST http://localhost:3000/api/usuarios
 Content-Type: application/json
 
 {
     "nome": "Dudu Maconha",
-    "email": "kanabis@email.com",
-    "password": "16:20"
+    "email": "pabloangelons.06@gmail.com",
+    "password": "16:20",
+    "otp": "689394"
 }
 
 ###
