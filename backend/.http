@@ -1,0 +1,37 @@
+### Listar todos os usuários
+GET http://localhost:3000/api/usuarios
+
+###
+
+### Buscar usuário por ID
+GET http://localhost:3000/api/usuarios/1
+
+###
+
+### Criar novo usuário
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+    "nome": "Maria",
+    "email": "maria@email.com",
+    "password": "123456"
+}
+
+###
+
+### Atualizar usuário
+PUT http://localhost:3000/api/usuarios/3
+Content-Type: application/json
+
+{
+    "nome": "Maria Silva",
+    "email": "maria.silva@email.com",
+    "password": "novaSenha",
+    "historico_pontuacoes": []
+}
+
+###
+
+### Deletar usuário
+DELETE http://localhost:3000/api/usuarios/3

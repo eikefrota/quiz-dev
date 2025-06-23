@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+<<<<<<< HEAD:mobile/app/screens/InicioScreen.jsx
 import api from '../api/api';
 import { colors, fonts } from '../constants/theme';
+=======
+import api from '../../api/api';
+import { colors, fonts } from '../../constants/theme';
+import styles from './InicioScreenStyles'; // Importando os estilos
+>>>>>>> 4a747b6abef2c01a9f44a9bb7056877afac03484:mobile/app/screens/Inicio/InicioScreen.jsx
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -17,7 +23,7 @@ export default function HomeScreen() {
       <View style={styles.avatarContainer}>
         {/* Ícone de usuário genérico */}
         <Image
-          source={require('../assets/images/user-icon.png')} 
+          source={require('../../assets/images/user-icon.png')} 
           style={styles.avatar}
         />
       </View>
@@ -41,42 +47,3 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#7B1FA2',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarContainer: {
-    marginBottom: -20,
-  },
-  avatar: {
-    width: 250,
-    height: 250,
-    tintColor: '#fff',
-  },
-  username: {
-    fontSize: 40,
-    color: '#fff',
-    fontWeight: 'bold',
-    marginBottom: 100,
-  },
-  button: {
-      backgroundColor: colors.white,
-      paddingVertical: 20,
-      paddingHorizontal: 10,
-      borderRadius: 10,
-      width: '75%',
-      marginTop: 20,
-      marginBottom: 10,
-      alignSelf: 'center',
-    },
-    buttonText: {
-      color: colors.purple,
-      fontSize: 22,
-      fontFamily: fonts.bold,
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-});

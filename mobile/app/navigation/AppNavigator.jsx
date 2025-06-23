@@ -8,8 +8,7 @@ import CadastroScreen from '../screens/Cadastro/CadastroScreen';
 import TemaScreen from '../screens/Temas/TemaScreen';
 import InicioScreen from '../screens/Inicio/InicioScreen';
 import UsuarioScreen from '../screens/Usuario/UsuarioScreen';
-import SuccessScreen from '../screens/SuccessScreen';
-import ErrorScreen from '../screens/ErrorScreen';
+import futebolScreen from '../screens/futebolSreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +16,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Futebol" component={futebolScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Cadastro" component={CadastroScreen} />
