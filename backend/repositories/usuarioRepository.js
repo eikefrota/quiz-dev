@@ -17,6 +17,10 @@ class UsuarioRepository {
         if (existing.rows.length > 0) {
             throw new Error('Email já cadastrado');
         }
+        // Define valor padrão se não enviado
+        if (historico_pontuacoes === undefined) {
+            historico_pontuacoes = {};
+        }
         const result = await db.query(
             'INSERT INTO usuario (nome, email, password, historico_pontuacoes) VALUES ($1, $2, $3, $4) RETURNING *',
             [nome, email, password, historico_pontuacoes]
