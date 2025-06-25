@@ -96,6 +96,7 @@ class UsuarioController {
 
     async verificarOtp(req, res) {
         const { email, otp, nome, password } = req.body;
+        console.log('DEBUG OTP:', { esperado: otpStore[email], recebido: otp, email });
         if (otpStore[email] === otp) {
             delete otpStore[email];
             // Cria o usuário após OTP válido

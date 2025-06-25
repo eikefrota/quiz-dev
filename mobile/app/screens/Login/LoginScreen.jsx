@@ -25,6 +25,8 @@ export default function LoginScreen() {
       if (response.status === 200) {
         // Salva o usuário retornado no AsyncStorage
         await AsyncStorage.setItem('usuario', JSON.stringify(response.data.usuario));
+        // Salva o token JWT também!
+        await AsyncStorage.setItem('token', response.data.token);
         navigation.navigate('Inicio');
       }
     } catch (error) {

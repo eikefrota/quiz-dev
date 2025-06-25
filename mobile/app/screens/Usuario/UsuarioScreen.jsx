@@ -33,7 +33,21 @@ export default function UsuarioScreen() {
         Alert.alert('Atenção', 'Nome e email são obrigatórios.');
         return;
       }
-      await api.put(`/usuarios/${usuarioId}`, { nome, email, password: senha || undefined });
+      // Recupera o token salvo no AsyncStorage
+      const token = await AsyncStorage.getItem('token');
+      if (!token) {
+        Alert.alert('Erro', 'Usuário não autenticado.');
+        return;
+      }
+      await api.put(
+        `/usuarios/${usuarioId}`,
+        { nome, email, password: senha || undefined },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       Alert.alert('Sucesso', 'Dados atualizados com sucesso!');
       navigation.goBack();
     } catch (error) {
