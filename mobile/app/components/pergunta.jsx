@@ -1,23 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 
-export default function TemaScreen() {
+export default function QuizFutebol() {
   const [tema, setTema] = useState(null);
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {!tema && (
         <>
-          <Button title="Futebol" onPress={() => setTema('futebol')} />
-          {/* Adicione outros temas aqui */}
+          <Button title="Iniciar" onPress={() => setTema('futebol')} />
         </>
       )}
       {tema === 'futebol' && <PerguntaFutebol />}
-      {/* Você pode adicionar lógica para outros temas aqui */}
     </View>
   );
 }
-
 
 const PerguntaFutebol = () => {
   const [respostaSelecionada, setRespostaSelecionada] = useState(null);
@@ -69,11 +66,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     padding: 15,
     marginVertical: 5,
-    borderRadius: 8,
+    borderRadius:50,
   },
+
   textoBotao: { fontSize: 16 },
   correta: { backgroundColor: '#4CAF50' },
   errada: { backgroundColor: '#F44336' },
-  resultado: { marginTop: 20, fontSize: 18, fontWeight: 'bold' }
+  resultado: { marginTop: 20, fontSize: 28, fontWeight: 'bold' }
 });
-

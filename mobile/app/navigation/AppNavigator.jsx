@@ -8,6 +8,7 @@ import CadastroScreen from '../screens/Cadastro/CadastroScreen';
 import TemaScreen from '../screens/Temas/TemaScreen';
 import InicioScreen from '../screens/Inicio/InicioScreen';
 import UsuarioScreen from '../screens/Usuario/UsuarioScreen';
+import QuizFutebol from '../components/pergunta';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ export default function AppNavigator() {
         <Stack.Screen name="Inicio" component={InicioScreen} />
         <Stack.Screen name="Usuario" component={UsuarioScreen} />
         <Stack.Screen name="Temas" component={TemaScreen} />
+        <Stack.Screen name="QuizFutebol" component={QuizFutebol} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

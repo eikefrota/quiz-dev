@@ -37,7 +37,7 @@ export default function TemaScreen() {
             <TouchableOpacity
               key={tema.nome}
               style={styles.temaButton}
-              // onPress={() => navigation.navigate(tema.tela)}
+              onPress={() => navigation.navigate(tema.tela)}     //descometado
               activeOpacity={0.8}
             >
               <Text style={styles.emoji}>{tema.emoji}</Text>
