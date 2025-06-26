@@ -8,10 +8,12 @@ export default function QuizFutebol() {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {!tema && (
         <>
-          <Button title="Iniciar" onPress={() => setTema('futebol')} />
+          <Button title="Futebol" onPress={() => setTema('futebol')} />
+          {/* Adicione outros temas aqui */}
         </>
       )}
       {tema === 'futebol' && <PerguntaFutebol />}
+      {/* Você pode adicionar lógica para outros temas aqui */}
     </View>
   );
 }

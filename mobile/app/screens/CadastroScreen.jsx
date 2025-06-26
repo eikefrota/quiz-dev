@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+<<<<<<< HEAD:mobile/app/screens/CadastroScreen.jsx
+import api from '../api/api';
+import { colors, fonts } from '../constants/theme';
+=======
 import api from '../../api/api';
 import styles from './CadastroScreenStyles'; // Importando os estilos
+>>>>>>> 4a747b6abef2c01a9f44a9bb7056877afac03484:mobile/app/screens/Cadastro/CadastroScreen.jsx
 
 export default function CadastroScreen() {
   const navigation = useNavigation();
