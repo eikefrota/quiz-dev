@@ -39,7 +39,8 @@ yarn-error.*
 *.tsbuildinfo
 
 # lock files
-package-lock.json
+# package-lock.json
+# package.json
 yarn.lock
 
 # Example app
