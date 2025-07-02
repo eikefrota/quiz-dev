@@ -135,18 +135,22 @@ class UsuarioRoutes {
 
         this.router.post('/login', async (req, res) => {
             const { email, password } = req.body;
-            const usuarios = await require('../repositories/usuarioRepository').getAll();
-            const usuario = usuarios.find(u => u.email === email && u.password === password);
-            if (usuario) {
-                // Gera o token JWT
+            try {
+                const usuarioRepo = require('../repositories/usuarioRepository');
+                const result = await require('../db/db').query('SELECT * FROM usuario WHERE email = $1', [email]);
+                const usuario = result.rows[0];
+                if (!usuario || usuario.password !== password) {
+                    return res.status(401).json({ message: 'Email ou senha incorretos' });
+                }
                 const token = jwt.sign(
                     { id: usuario.id, email: usuario.email, nome: usuario.nome },
                     JWT_SECRET,
                     { expiresIn: '1h' }
                 );
                 return res.status(200).json({ message: 'Login realizado com sucesso', token, usuario });
-            } else {
-                return res.status(401).json({ message: 'Email ou senha incorretos' });
+            } catch (error) {
+                console.error('Erro no login:', error);
+                return res.status(500).json({ message: 'Erro interno no login' });
             }
         });
 

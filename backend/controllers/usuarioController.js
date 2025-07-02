@@ -1,9 +1,8 @@
 const usuarioService = require('../services/usuarioService');
 const emailService = require('../services/emailService');
 const jwt = require('jsonwebtoken');
+const db = require('../db/db');
 const JWT_SECRET = process.env.JWT_SECRET || '7670783fa7ecc5d27f3629cb644d294f3ca7cce8cff5a49fcdd08d2d06281570f09de329a2d5b6e0105c500a0e145fb6a188a53f99a69114ae82bb6c44117053';
-
-const otpStore = {}; // Em produção, use Redis ou banco
 
 class UsuarioController {
     async getAll(req, res) {
@@ -37,10 +36,10 @@ class UsuarioController {
             const usuario = req.body;
             const usuarios = await usuarioService.create(usuario);
             const token = jwt.sign(
-                { id: usuario.id, email: usuario.email, nome: usuario.nome },
-            JWT_SECRET,
-            { expiresIn: '1h' }
-        );
+                { id: usuarios.id, email: usuarios.email, nome: usuarios.nome },
+                JWT_SECRET,
+                { expiresIn: '1h' }
+            );
             return res.status(201).json({message: 'Usuario criado com sucesso',token , usuario: usuarios});
         } catch (error) {
             if (error.message === 'Email já cadastrado') {
@@ -51,11 +50,8 @@ class UsuarioController {
         }
     }
 
-
-
     async update(req, res) {
         try {
-            
             const { id } = req.params;
             const usuario  = req.body;
             const usuarioAtualizado = await usuarioService.update(id, usuario);
@@ -80,26 +76,42 @@ class UsuarioController {
             } 
 
             return res.status(200).json({ message: 'Usuario deletado com sucesso', usuario: usuarioDeletado });
-    } catch (error) {
-        console.erro('Erro ao removerusuario: ', error);
-        return res.status(400).json({error: 'Erro ao remover usuario'});
+        } catch (error) {
+            console.error('Erro ao removerusuario: ', error);
+            return res.status(400).json({error: 'Erro ao remover usuario'});
+        }
     }
-}
 
     async solicitarOtp(req, res) {
         const { email } = req.body;
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        otpStore[email] = otp;
+
+        // Salva ou atualiza o OTP no banco
+        await db.query(
+            `CREATE TABLE IF NOT EXISTS otps (
+                email VARCHAR(100) PRIMARY KEY,
+                otp VARCHAR(10) NOT NULL,
+                criado_em TIMESTAMP DEFAULT NOW()
+            )`
+        );
+        await db.query(
+            `INSERT INTO otps (email, otp) VALUES ($1, $2)
+             ON CONFLICT (email) DO UPDATE SET otp = $2, criado_em = NOW()`,
+            [email, otp]
+        );
+
         await emailService(email, otp);
         res.status(200).json({ message: 'OTP enviado para o e-mail.' });
     }
 
     async verificarOtp(req, res) {
         const { email, otp, nome, password } = req.body;
-        console.log('DEBUG OTP:', { esperado: otpStore[email], recebido: otp, email });
-        if (otpStore[email] === otp) {
-            delete otpStore[email];
-            // Cria o usuário após OTP válido
+
+        const result = await db.query('SELECT otp FROM otps WHERE email = $1', [email]);
+        const otpEsperado = result.rows[0]?.otp;
+
+        if (otpEsperado === otp) {
+            await db.query('DELETE FROM otps WHERE email = $1', [email]);
             const usuario = await usuarioService.create({ nome, email, password, historico_pontuacoes: {} });
             const token = jwt.sign(
                 { id: usuario.id, email: usuario.email, nome: usuario.nome },
