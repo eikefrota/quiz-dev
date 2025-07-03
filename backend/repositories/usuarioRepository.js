@@ -22,7 +22,7 @@ class UsuarioRepository {
             historico_pontuacoes = {};
         }
         const result = await db.query(
-            'INSERT INTO usuario (nome, email, password, historico_pontuacoes) VALUES ($1, $2, $3, $4) RETURNING *',
+            'INSERT INTO usuario (nome, sobrenome, data_nascimento, email, password, historico_pontuacoes) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
             [nome, email, password, historico_pontuacoes]
         );
         return new Usuario(result.rows[0]);
@@ -34,13 +34,15 @@ class UsuarioRepository {
 
         // Usa os dados enviados ou mantém os antigos
         const nome = dados.nome ?? usuarioAtual.nome;
+        const sobrenome = dados.sobrenome ?? usuarioAtual.sobrenome;
+        const data_nascimento = dados.data_nascimento ?? usuarioAtual.data_nascimento;
         const email = dados.email ?? usuarioAtual.email;
         const password = dados.password ?? usuarioAtual.password;
         const historico_pontuacoes = dados.historico_pontuacoes ?? usuarioAtual.historico_pontuacoes;
 
         const result = await db.query(
-            'UPDATE usuario SET nome=$1, email=$2, password=$3, historico_pontuacoes=$4 WHERE id=$5 RETURNING *',
-            [nome, email, password, historico_pontuacoes, id]
+            'UPDATE usuario SET nome=$1, sobrenome=$2, data_nascimento=$3 email=$4, password=$5, historico_pontuacoes=$6 WHERE id=$7 RETURNING *',
+            [nome, sobrenome, data_nascimento, email, password, historico_pontuacoes, id]
         );
         return new Usuario(result.rows[0]);
     }

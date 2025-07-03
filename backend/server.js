@@ -57,6 +57,7 @@ class Server {
       await this.initDb(); 
       this.app.listen(this.port, () => {
         console.log(`Servidor rodando na porta ${this.port}`);
+        console.log(`Swagger disponível em http://localhost:${this.port}/api-docs`);
       });
     } catch (error) {
       console.error('Falha crítica ao iniciar o servidor:', error);

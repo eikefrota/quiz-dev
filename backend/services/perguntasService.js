@@ -1,13 +1,20 @@
-const axios = require('axios');
+const perguntasRepository = require('../repositories/perguntasRepository');
 
 class PerguntasService {
-    constructor(baseUrl = 'https://opentdb.com/api.php') {
-        this.baseUrl = baseUrl;
+    async getPerguntas() {
+        return await perguntasRepository.getAll();
     }
-
-    async getPerguntas(amount = 20, category = 18, type = 'multiple') {
-        const response = await axios.get(`${this.baseUrl}?amount=${amount}&category=${category}&type=${type}`);
-    return response.data.results;
+    async getPerguntaById(id) {
+        return await perguntasRepository.getById(id);
+    }
+    async createPergunta(data) {
+        return await perguntasRepository.create(data);
+    }
+    async updatePergunta(id, data) {
+        return await perguntasRepository.update(id, data);
+    }
+    async removePergunta(id) {
+        return await perguntasRepository.remove(id);
     }
 }
 
