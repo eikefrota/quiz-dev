@@ -27,27 +27,18 @@ export default function HomeScreen() {
       end={{ x: 1, y: 0 }}
       style={styles.container}
     >
-      <View style={styles.avatarContainer}>
+      <View>
         <Image
-          source={require('../../assets/images/user-icon.png')}
-          style={styles.avatar}
+          source={require('../../assets/images/logo.png')}
+          style={styles.logo}
         />
       </View>
-
-      <Text style={styles.username}>{username}</Text>
       
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Temas')}
       >
         <Text style={styles.buttonText}>PLAY</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Usuario')}
-      >
-        <Text style={styles.buttonText}>EDITAR</Text>
       </TouchableOpacity>
     </LinearGradient>
   );

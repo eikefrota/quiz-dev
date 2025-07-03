@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../../api/api';
-import { colors, fonts } from '../../constants/theme';
-import styles from './LoginScreenStyles'; // Importando os estilos
+import { colors } from '../../constants/theme';
+import styles from './LoginScreenStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoadingModal from '../Loading/LoadingModal'; // Adicione este import
+import LoadingModal from '../Loading/LoadingModal';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false); // Novo estado
+  const [loading, setLoading] = useState(false);
 
   const login = async () => {
     try {
@@ -20,19 +21,20 @@ export default function LoginScreen() {
         alert('Preencha todos os campos');
         return;
       }
-      setLoading(true); // Inicia o loading
+      setLoading(true);
       const response = await api.post('/usuarios/login', { email, password });
       if (response.status === 200) {
-        // Salva o usuário retornado no AsyncStorage
         await AsyncStorage.setItem('usuario', JSON.stringify(response.data.usuario));
-        // Salva o token JWT também!
         await AsyncStorage.setItem('token', response.data.token);
-        navigation.navigate('Inicio');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'MainTabs' }],
+        });
       }
     } catch (error) {
       alert('Email ou senha incorretos.');
     } finally {
-      setLoading(false); // Finaliza o loading
+      setLoading(false);
     }
   };
 
@@ -44,6 +46,12 @@ export default function LoginScreen() {
       style={styles.container}
     >
       <LoadingModal visible={loading} />
+      {/* Seta fixa no canto superior esquerdo */}
+      <View style={{ position: 'absolute', top: 60, left: 20, zIndex: 10 }}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.inner}>
         <Text style={styles.title}>Login</Text>
         <TextInput
@@ -72,4 +80,3 @@ export default function LoginScreen() {
     </LinearGradient>
   );
 }
-
