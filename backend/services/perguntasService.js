@@ -7,6 +7,9 @@ class PerguntasService {
     async getPerguntaById(id) {
         return await perguntasRepository.getById(id);
     }
+    async getPerguntasByCategoria(categoria) {
+        return await perguntasRepository.getByCategoria(categoria);
+    }
     async createPergunta(data) {
         return await perguntasRepository.create(data);
     }

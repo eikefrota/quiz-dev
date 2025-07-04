@@ -1,5 +1,6 @@
 const express = require('express');
 const perguntasController = require('../controllers/perguntasController');
+const ErroPerguntaMiddleware = require('../middleware/validadePerguntaMiddleware');
 
 class PerguntasRoutes {
     constructor() {
@@ -19,6 +20,26 @@ class PerguntasRoutes {
          *         description: Lista as perguntas
          */
         this.router.get('/', perguntasController.getPerguntas);
+        /**
+         * @swagger
+         * /api/perguntas/categoria:
+         *   get:
+         *     summary: Retorna perguntas por categoria
+         *     tags: [Perguntas]
+         *     parameters:
+         *       - in: query
+         *         name: categoria
+         *         required: true
+         *         description: Categoria da pergunta
+         *         schema:
+         *           type: string
+         *     responses:
+         *       200:
+         *         description: Lista de perguntas filtradas por categoria
+         *       400:
+         *         description: Erro na validação dos dados
+         */
+        this.router.get('/categoria', perguntasController.getPerguntasByCategoria);
         /**
          * @swagger
          * /api/perguntas/{id}:
@@ -54,6 +75,8 @@ class PerguntasRoutes {
          *             properties:
          *               categoria:
          *                 type: string
+         *               pontuacao:
+         *                 type: integer
          *               pergunta:
          *                 type: string
          *               resposta_correta:
@@ -91,6 +114,8 @@ class PerguntasRoutes {
          *             properties:
          *               categoria:
          *                 type: string
+         *               pontuacao:
+         *                 type: integer
          *               pergunta:
          *                 type: string
          *               resposta_correta:

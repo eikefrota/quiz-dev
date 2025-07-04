@@ -24,6 +24,17 @@ class PerguntaController {
         }
     }
 
+    getPerguntasByCategoria = async (req, res, next) => {
+        try {
+            const categoria = req.query.categoria;
+            if (!categoria) return res.status(400).json({ error: 'Categoria é obrigatória' });
+            const perguntas = await this.perguntasService.getPerguntasByCategoria(categoria);   
+            if (perguntas.length === 0) return res.status(404).json({ error: 'Nenhuma pergunta encontrada para esta categoria' });
+            res.json(perguntas);
+        } catch (error) {
+            next(error);
+        }
+    }
     createPergunta = async (req, res, next) => {
         try {
             const pergunta = await this.perguntasService.createPergunta(req.body);

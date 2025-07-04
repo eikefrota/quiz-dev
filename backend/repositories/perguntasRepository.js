@@ -12,11 +12,16 @@ class PerguntasRepository {
         return result.rows[0] ? new Pergunta(result.rows[0]) : null;
     }
 
-    async create({ categoria, pergunta, resposta_correta, respostas_incorretas }) {
+    async getByCategoria(categoria) {
+        const result = await db.query('SELECT * FROM pergunta WHERE categoria = $1', [categoria]);
+        return result.rows.map(row => new Pergunta(row));
+    }
+
+    async create({ categoria, pontuacao, pergunta, resposta_correta, respostas_incorretas }) {
         // Garante que respostas_incorretas seja salvo como JSON string
         const result = await db.query(
-            'INSERT INTO pergunta (categoria, pergunta, resposta_correta, respostas_incorretas) VALUES ($1, $2, $3, $4) RETURNING *',
-            [categoria, pergunta, resposta_correta, JSON.stringify(respostas_incorretas)]
+            'INSERT INTO pergunta (categoria, pontuacao, pergunta, resposta_correta, respostas_incorretas) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [categoria, pontuacao, pergunta, resposta_correta, JSON.stringify(respostas_incorretas)]
         );
         return new Pergunta(result.rows[0]);
     }
@@ -25,12 +30,13 @@ class PerguntasRepository {
         const perguntaAtual = await this.getById(id);
         if (!perguntaAtual) return null;
         const categoria = dados.categoria ?? perguntaAtual.categoria;
+        const pontuacao = dados.pontuacao ?? perguntaAtual.pontuacao;
         const pergunta = dados.pergunta ?? perguntaAtual.pergunta;
         const resposta_correta = dados.resposta_correta ?? perguntaAtual.resposta_correta;
-        const respostas_incorretas = dados.respostas_incorretas ? JSON.stringify(dados.respostas_incorretas) : perguntaAtual.respostas_incorretas;  
+        const respostas_incorretas = dados.respostas_incorretas ?? perguntaAtual.respostas_incorretas;
         const result = await db.query(
-            'UPDATE pergunta SET categoria=$1, pergunta=$2, resposta_correta=$3, respostas_incorretas=$4 WHERE id=$5 RETURNING *',
-            [categoria, pergunta, resposta_correta, respostas_incorretas, id]
+            'UPDATE pergunta SET categoria=$1, pontuacao=$2, pergunta=$3, resposta_correta=$4, respostas_incorretas=$5 WHERE id=$6  RETURNING *',
+            [categoria, pontuacao, pergunta, resposta_correta, respostas_incorretas, id]
         );
         return new Pergunta(result.rows[0]);
     }
