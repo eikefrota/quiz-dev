@@ -27,7 +27,7 @@ class PerguntasRepository {
         const categoria = dados.categoria ?? perguntaAtual.categoria;
         const pergunta = dados.pergunta ?? perguntaAtual.pergunta;
         const resposta_correta = dados.resposta_correta ?? perguntaAtual.resposta_correta;
-        const respostas_incorretas = dados.respostas_incorretas ?? perguntaAtual.respostas_incorretas;
+        const respostas_incorretas = dados.respostas_incorretas ? JSON.stringify(dados.respostas_incorretas) : perguntaAtual.respostas_incorretas;  
         const result = await db.query(
             'UPDATE pergunta SET categoria=$1, pergunta=$2, resposta_correta=$3, respostas_incorretas=$4 WHERE id=$5 RETURNING *',
             [categoria, pergunta, resposta_correta, respostas_incorretas, id]

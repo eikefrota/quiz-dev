@@ -89,10 +89,16 @@ class PerguntasRoutes {
          *           schema:
          *             type: object
          *             properties:
-         *               titulo:
+         *               categoria:
          *                 type: string
-         *               descricao:
+         *               pergunta:
          *                 type: string
+         *               resposta_correta:
+         *                 type: string
+         *               respostas_incorretas:
+         *                 type: array
+         *                 items:
+         *                   type: string
          *     responses:
          *       200:
          *         description: Pergunta atualizada com sucesso
