@@ -39,7 +39,7 @@ export default function HomeScreen() {
     >
       <View style={{ position: 'absolute', top: 60, left: 20, zIndex: 10 }}>
         <TouchableOpacity onPress={logout}>
-          <Ionicons name="log-out-outline" size={35} color="#fff" />
+          <Ionicons name="log-out-outline" size={36} color="#fff" />
         </TouchableOpacity>
       </View>
 
