@@ -13,7 +13,10 @@ class PerguntasRepository {
     }
 
     async getByCategoria(categoria) {
-        const result = await db.query('SELECT * FROM pergunta WHERE categoria = $1', [categoria]);
+        const result = await db.query(
+            'SELECT * FROM pergunta WHERE categoria = $1 ORDER BY RANDOM()',
+            [categoria]
+        );
         return result.rows.map(row => new Pergunta(row));
     }
 
@@ -33,7 +36,11 @@ class PerguntasRepository {
         const pontuacao = dados.pontuacao ?? perguntaAtual.pontuacao;
         const pergunta = dados.pergunta ?? perguntaAtual.pergunta;
         const resposta_correta = dados.resposta_correta ?? perguntaAtual.resposta_correta;
-        const respostas_incorretas = dados.respostas_incorretas ?? perguntaAtual.respostas_incorretas;
+        // Corrige aqui: sempre salva como JSON string
+        const respostas_incorretas = dados.respostas_incorretas !== undefined
+            ? JSON.stringify(dados.respostas_incorretas)
+            : perguntaAtual.respostas_incorretas;
+
         const result = await db.query(
             'UPDATE pergunta SET categoria=$1, pontuacao=$2, pergunta=$3, resposta_correta=$4, respostas_incorretas=$5 WHERE id=$6  RETURNING *',
             [categoria, pontuacao, pergunta, resposta_correta, respostas_incorretas, id]

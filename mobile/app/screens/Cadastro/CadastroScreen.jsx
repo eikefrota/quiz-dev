@@ -41,7 +41,17 @@ export default function CadastroScreen() {
       setShowOtp(true);
       Alert.alert('Verificação', 'Enviamos um código para seu e-mail.');
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível enviar o OTP.');
+      // Verifica se a resposta do backend contém o erro de email já cadastrado
+      if (
+        error.response &&
+        error.response.data &&
+        (error.response.data.error === 'Email já cadastrado' ||
+          error.response.data.message === 'Email já cadastrado')
+      ) {
+        Alert.alert('Erro', 'Email inserido já está em uso');
+      } else {
+        Alert.alert('Erro', 'Não foi possível enviar o OTP.');
+      }
     } finally {
       setLoading(false);
     }
