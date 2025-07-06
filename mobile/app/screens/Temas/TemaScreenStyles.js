@@ -1,53 +1,70 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { colors, fonts } from '../../constants/theme';
+
+const { width } = Dimensions.get('window');
+const CARD_WIDTH = width * 0.92;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    justifyContent: 'center', // centraliza verticalmente
-    alignItems: 'center',     // centraliza horizontalmente
+    paddingTop: 30,
+    backgroundColor: 'transparent',
   },
   title: {
-    marginTop: 80,
-    fontSize: 34,
+    fontSize: 32,
     color: colors.white,
     fontWeight: 'bold',
-    marginBottom: 40,
+    marginBottom: 18,
     textAlign: 'center',
+    marginTop: 70,
+    letterSpacing: 1,
   },
-  temasContainer: {
+  scrollContent: {
+    alignItems: 'center',
+    paddingBottom: 40,
+    paddingTop: 10,
+    width: '100%',
+  },
+  temasGrid: {
     width: '100%',
     alignItems: 'center',
+    gap: 14,
   },
-  temaButton: {
-    flexDirection: 'column',
-    alignItems: 'center', 
-    justifyContent: 'center',
+  temaCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.white,
-    borderRadius: 11,
-    paddingVertical: 22,
-    paddingHorizontal: 30,
-    marginBottom: 28,
-    width: '100%',
+    borderRadius: 22,
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    marginBottom: 6,
+    width: CARD_WIDTH,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
+    shadowOpacity: 0.10,
     shadowRadius: 6,
-    elevation: 3,
+    elevation: 2,
+  },
+  emojiCircle: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#f3e6fa',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 18,
   },
   emoji: {
-    fontSize: 38,
-    marginBottom: 8, // espaço entre emoji e texto
-    marginRight: 0,  // remove margem lateral
+    fontSize: 28,
     textAlign: 'center',
   },
   temaText: {
-    fontSize: 22,
+    fontSize: 21,
     color: colors.purple,
     fontFamily: fonts.bold,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'left',
+    marginLeft: 2,
   },
 });
 

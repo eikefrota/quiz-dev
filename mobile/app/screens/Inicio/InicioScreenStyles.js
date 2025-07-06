@@ -8,12 +8,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatarContainer: {
-    marginBottom: -20,
-  },
-  avatar: {
-    width: 250,
-    height: 250,
+  logo: {
     tintColor: '#fff',
   },
   username: {
