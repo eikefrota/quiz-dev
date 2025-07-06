@@ -8,6 +8,17 @@ import styles from './CadastroScreenStyles';
 import LoadingModal from '../Loading/LoadingModal';
 import { Ionicons } from '@expo/vector-icons';
 
+function formatarDataNascimento(text) {
+  let cleaned = text.replace(/\D/g, '');
+  cleaned = cleaned.slice(0, 8);
+  if (cleaned.length >= 5) {
+    return cleaned.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3');
+  } else if (cleaned.length >= 3) {
+    return cleaned.replace(/(\d{2})(\d{1,2})/, '$1/$2');
+  }
+  return cleaned;
+}
+
 export default function CadastroScreen() {
   const navigation = useNavigation();
   const [nome, setNome] = useState('');
@@ -15,31 +26,47 @@ export default function CadastroScreen() {
   const [dataNascimento, setDataNascimento] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [otp, setOtp] = useState('');
+  const [showOtp, setShowOtp] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const cadastrar = async () => {
+  const solicitarOtp = async () => {
     try {
       if (!nome || !sobrenome || !email || !senha) {
         Alert.alert('Atenção', 'Preencha todos os campos obrigatórios.');
         return;
       }
       setLoading(true);
-      const response = await api.post('/usuarios', {
+      await api.post('/usuarios/solicitar-otp', { email });
+      setShowOtp(true);
+      Alert.alert('Verificação', 'Enviamos um código para seu e-mail.');
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível enviar o OTP.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const verificarOtp = async () => {
+    try {
+      setLoading(true);
+      const response = await api.post('/usuarios/verificar-otp', {
         nome,
         sobrenome,
         data_nascimento: dataNascimento,
         email,
         password: senha,
+        otp,
       });
       if (response.status === 201) {
         Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'MainTabs' }],
+          routes: [{ name: 'Home' }],
         });
       }
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível cadastrar. Tente novamente.');
+      Alert.alert('Erro', 'OTP inválido ou erro ao cadastrar.');
     } finally {
       setLoading(false);
     }
@@ -53,7 +80,6 @@ export default function CadastroScreen() {
       style={styles.container}
     >
       <LoadingModal visible={loading} />
-      {/* Seta fixa no canto superior esquerdo */}
       <View style={{ position: 'absolute', top: 60, left: 20, zIndex: 10 }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -61,46 +87,70 @@ export default function CadastroScreen() {
       </View>
       <View style={styles.inner}>
         <Text style={styles.title}>Cadastro</Text>
-        <TextInput
-          placeholder="Nome"
-          value={nome}
-          onChangeText={setNome}
-          style={styles.input}
-          placeholderTextColor={colors.textLight}
-        />
-        <TextInput
-          placeholder="Sobrenome"
-          value={sobrenome}
-          onChangeText={setSobrenome}
-          style={styles.input}
-          placeholderTextColor={colors.textLight}
-        />
-        <TextInput
-          placeholder="Data de Nascimento (AAAA-MM-DD)"
-          value={dataNascimento}
-          onChangeText={setDataNascimento}
-          style={styles.input}
-          placeholderTextColor={colors.textLight}
-        />
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          style={styles.input}
-          placeholderTextColor={colors.textLight}
-        />
-        <TextInput
-          placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
-          secureTextEntry
-          style={styles.input}
-          placeholderTextColor={colors.textLight}
-        />
-        <TouchableOpacity style={styles.button} onPress={cadastrar} disabled={loading}>
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        </TouchableOpacity>
+        {!showOtp ? (
+          <>
+            <TextInput
+              placeholder="Nome"
+              value={nome}
+              onChangeText={setNome}
+              style={styles.input}
+              placeholderTextColor={colors.textLight}
+            />
+            <TextInput
+              placeholder="Sobrenome"
+              value={sobrenome}
+              onChangeText={setSobrenome}
+              style={styles.input}
+              placeholderTextColor={colors.textLight}
+            />
+            <TextInput
+              placeholder="Data de Nascimento (DD/MM/AAAA)"
+              value={dataNascimento}
+              onChangeText={text => setDataNascimento(formatarDataNascimento(text))}
+              style={styles.input}
+              placeholderTextColor={colors.textLight}
+              keyboardType="numeric"
+              maxLength={10}
+            />
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              style={styles.input}
+              placeholderTextColor={colors.textLight}
+            />
+            <TextInput
+              placeholder="Senha"
+              value={senha}
+              onChangeText={setSenha}
+              secureTextEntry
+              style={styles.input}
+              placeholderTextColor={colors.textLight}
+            />
+            <TouchableOpacity style={styles.button} onPress={solicitarOtp} disabled={loading}>
+              <Text style={styles.buttonText}>Cadastrar</Text>
+            </TouchableOpacity>
+          </>
+        ) : (
+          <>
+            <Text style={{ color: colors.white, marginBottom: 16 }}>
+              Digite o código enviado para seu e-mail:
+            </Text>
+            <TextInput
+              placeholder="Código OTP"
+              value={otp}
+              onChangeText={setOtp}
+              keyboardType="numeric"
+              style={styles.input}
+              placeholderTextColor={colors.textLight}
+              maxLength={6}
+            />
+            <TouchableOpacity style={styles.button} onPress={verificarOtp} disabled={loading}>
+              <Text style={styles.buttonText}>Verificar Código</Text>
+            </TouchableOpacity>
+          </>
+        )}
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.link}>
           <Text style={styles.linkText}>Já possui conta? Entrar</Text>
         </TouchableOpacity>

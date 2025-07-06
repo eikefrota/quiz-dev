@@ -11,7 +11,7 @@ class UsuarioRepository {
         const result = await db.query(`SELECT * FROM usuario WHERE id = $1`, [id]);
         return result.rows[0] ? new Usuario(result.rows[0]) : null;
     }
-    async create({ nome, email, password, historico_pontuacoes }) {
+    async create({ nome, sobrenome, data_nascimento, email, password, historico_pontuacoes }) {
         // Verifica se já existe usuário com o mesmo email
         const existing = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
         if (existing.rows.length > 0) {
@@ -23,7 +23,7 @@ class UsuarioRepository {
         }
         const result = await db.query(
             'INSERT INTO usuario (nome, sobrenome, data_nascimento, email, password, historico_pontuacoes) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-            [nome, email, password, historico_pontuacoes]
+            [nome, sobrenome, data_nascimento, email, password, historico_pontuacoes]
         );
         return new Usuario(result.rows[0]);
     }
@@ -41,7 +41,7 @@ class UsuarioRepository {
         const historico_pontuacoes = dados.historico_pontuacoes ?? usuarioAtual.historico_pontuacoes;
 
         const result = await db.query(
-            'UPDATE usuario SET nome=$1, sobrenome=$2, data_nascimento=$3 email=$4, password=$5, historico_pontuacoes=$6 WHERE id=$7 RETURNING *',
+            'UPDATE usuario SET nome=$1, sobrenome=$2, data_nascimento=$3, email=$4, password=$5, historico_pontuacoes=$6 WHERE id=$7 RETURNING *',
             [nome, sobrenome, data_nascimento, email, password, historico_pontuacoes, id]
         );
         return new Usuario(result.rows[0]);

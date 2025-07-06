@@ -3,8 +3,11 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+
 import styles from './UsuarioScreenStyles';
 import { colors } from '../../constants/theme';
+import { formatarDataParaExibicao } from '../../utils';
 
 export default function UsuarioScreen() {
   const navigation = useNavigation();
@@ -21,7 +24,6 @@ export default function UsuarioScreen() {
       const usuarioSalvo = await AsyncStorage.getItem('usuario');
       if (usuarioSalvo) {
         const user = JSON.parse(usuarioSalvo);
-        // Agora puxando os campos diretamente do banco de dados
         setUsuario({
           nome: user.nome || '',
           sobrenome: user.sobrenome || '',
@@ -42,18 +44,21 @@ export default function UsuarioScreen() {
       style={styles.container}
     >
       <View style={styles.inner}>
-        <Image
-          source={require('../../assets/images/user-icon.png')}
+        <View
           style={{
-            width: 110,
-            height: 110,
-            borderRadius: 55,
-            marginBottom: 24,
-            borderWidth: 3,
-            borderColor: colors.white,
             backgroundColor: '#fff',
+            borderRadius: 67,
+            padding: 0,
+            alignSelf: 'center',
+            marginBottom: 24,
           }}
-        />
+        >
+          <Ionicons
+            name="person-circle"
+            size={134}
+            color="#510870"
+          />
+        </View>
         <Text style={styles.title}>{usuario.nome} {usuario.sobrenome}</Text>
         <View style={{ width: '100%', marginBottom: 18 }}>
           <Text style={styles.infoLabel}>Nome:</Text>
@@ -65,7 +70,9 @@ export default function UsuarioScreen() {
         </View>
         <View style={{ width: '100%', marginBottom: 18 }}>
           <Text style={styles.infoLabel}>Data de Nascimento:</Text>
-          <Text style={styles.infoValue}>{usuario.data_nascimento || 'Não informado'}</Text>
+          <Text style={styles.infoValue}>
+            {formatarDataParaExibicao(usuario.data_nascimento) || 'Não informado'}
+          </Text>
         </View>
         <View style={{ width: '100%', marginBottom: 18 }}>
           <Text style={styles.infoLabel}>Email:</Text>

@@ -6,6 +6,18 @@ import api from '../../api/api';
 import { colors } from '../../constants/theme';
 import styles from './EditarScreenStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { formatarDataParaExibicao, formatarDataParaEnvio } from '../../utils';
+
+function formatarDataNascimento(text) {
+  let cleaned = text.replace(/\D/g, '');
+  cleaned = cleaned.slice(0, 8);
+  if (cleaned.length >= 5) {
+    return cleaned.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3');
+  } else if (cleaned.length >= 3) {
+    return cleaned.replace(/(\d{2})(\d{1,2})/, '$1/$2');
+  }
+  return cleaned;
+}
 
 export default function EditarScreen() {
   const navigation = useNavigation();
@@ -23,7 +35,7 @@ export default function EditarScreen() {
         const usuario = JSON.parse(usuarioSalvo);
         setNome(usuario.nome || '');
         setSobrenome(usuario.sobrenome || '');
-        setDataNascimento(usuario.data_nascimento || '');
+        setDataNascimento(formatarDataParaExibicao(usuario.data_nascimento || ''));
         setEmail(usuario.email || '');
         setUsuarioId(usuario.id);
       }
@@ -45,7 +57,7 @@ export default function EditarScreen() {
       const dados = {
         nome,
         sobrenome,
-        data_nascimento: dataNascimento,
+        data_nascimento: formatarDataParaEnvio(dataNascimento),
         email,
       };
       if (senha) {
@@ -97,11 +109,13 @@ export default function EditarScreen() {
           placeholderTextColor={colors.textLight}
         />
         <TextInput
-          placeholder="Data de Nascimento (AAAA-MM-DD)"
+          placeholder="Data de Nascimento (DD/MM/AAAA)"
           value={dataNascimento}
-          onChangeText={setDataNascimento}
+          onChangeText={text => setDataNascimento(formatarDataNascimento(text))}
           style={styles.input}
           placeholderTextColor={colors.textLight}
+          keyboardType="numeric"
+          maxLength={10}
         />
         <TextInput
           placeholder="Email"

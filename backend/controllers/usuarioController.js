@@ -105,14 +105,21 @@ class UsuarioController {
     }
 
     async verificarOtp(req, res) {
-        const { email, otp, nome, password } = req.body;
+        const { email, otp, nome, sobrenome, data_nascimento, password } = req.body;
 
         const result = await db.query('SELECT otp FROM otps WHERE email = $1', [email]);
         const otpEsperado = result.rows[0]?.otp;
 
         if (otpEsperado === otp) {
             await db.query('DELETE FROM otps WHERE email = $1', [email]);
-            const usuario = await usuarioService.create({ nome, email, password, historico_pontuacoes: {} });
+            const usuario = await usuarioService.create({
+                nome,
+                sobrenome,
+                data_nascimento,
+                email,
+                password,
+                historico_pontuacoes: {}
+            });
             const token = jwt.sign(
                 { id: usuario.id, email: usuario.email, nome: usuario.nome },
                 JWT_SECRET,
