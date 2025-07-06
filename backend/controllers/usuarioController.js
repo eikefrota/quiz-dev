@@ -1,8 +1,8 @@
-const usuarioService = require('../services/usuarioService');
-const emailService = require('../services/emailService');
-const jwt = require('jsonwebtoken');
 const db = require('../db/db');
-const JWT_SECRET = process.env.JWT_SECRET || '7670783fa7ecc5d27f3629cb644d294f3ca7cce8cff5a49fcdd08d2d06281570f09de329a2d5b6e0105c500a0e145fb6a188a53f99a69114ae82bb6c44117053';
+const usuarioService = require('../services/usuarioService');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
+const emailService = require('../services/emailService');
 
 class UsuarioController {
     async getAll(req, res) {
@@ -84,6 +84,13 @@ class UsuarioController {
 
     async solicitarOtp(req, res) {
         const { email } = req.body;
+
+        // Verifica se já existe usuário com o mesmo email
+        const existing = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
+        if (existing.rows.length > 0) {
+            return res.status(400).json({ error: 'Email já cadastrado' });
+        }
+
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
         // Salva ou atualiza o OTP no banco
@@ -106,6 +113,12 @@ class UsuarioController {
 
     async verificarOtp(req, res) {
         const { email, otp, nome, sobrenome, data_nascimento, password } = req.body;
+
+        // Verifica se já existe usuário com o mesmo email
+        const existing = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
+        if (existing.rows.length > 0) {
+            return res.status(400).json({ error: 'Email já cadastrado' });
+        }
 
         const result = await db.query('SELECT otp FROM otps WHERE email = $1', [email]);
         const otpEsperado = result.rows[0]?.otp;

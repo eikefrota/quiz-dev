@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import styles from './TemaScreenStyles';
 
 const temas = [
-  { nome: 'Gerais', emoji: '🌍', tela: 'QuizGerais' },
+  { nome: 'Conhecimentos Gerais', emoji: '🌍', tela: 'QuizGerais' },
   { nome: 'Futebol', emoji: '⚽', tela: 'QuizFutebol' },
   { nome: 'Filmes', emoji: '📺', tela: 'QuizFilmes' },
   { nome: 'Séries', emoji: '🎬', tela: 'QuizSeries' },
@@ -15,7 +15,6 @@ const temas = [
   { nome: 'Geografia', emoji: '🗺️', tela: 'QuizGeografia' },
   { nome: 'Matemática', emoji: '➗', tela: 'QuizMatematica' },
   { nome: 'Ciência', emoji: '🔬', tela: 'QuizCiencia' },
-  { nome: 'Animes', emoji: '🎌', tela: 'QuizAnimes' },
   { nome: 'Jogos', emoji: '🎮', tela: 'QuizJogos' },
   { nome: 'Esportes', emoji: '🏅', tela: 'QuizEsportes' },
 ];
@@ -32,7 +31,7 @@ export default function TemaScreen() {
     >
       {/* Título e seta na mesma linha */}
       <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 70, marginBottom: 18, paddingHorizontal: 10 }}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: 10 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('MainTabs')} style={{ marginRight: 10 }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
         <Text style={[styles.title, { marginTop: 0, marginBottom: 0, flex: 1 }]}>Escolha um tema</Text>
@@ -47,7 +46,7 @@ export default function TemaScreen() {
               key={tema.nome}
               style={styles.temaCard}
               activeOpacity={0.85}
-              // onPress={() => navigation.navigate(tema.tela)}
+              onPress={() => navigation.navigate('QuizLoading', { categoria: tema.nome })}
             >
               <View style={styles.emojiCircle}>
                 <Text style={styles.emoji}>{tema.emoji}</Text>
