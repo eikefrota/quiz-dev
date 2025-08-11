@@ -20,10 +20,13 @@ POST http://localhost:3000/api/usuarios
 Content-Type: application/json
 
 {
-    "nome": "Dudu Maconha",
+    "nome": "Dudu",
+    "sobrenome": "Maconha",
+    "data_nascimento": "2000-01-01",
     "email": "pabloangelons.06@gmail.com",
     "password": "16:20",
-    "otp": "689394"
+    "otp": "562690",
+    "historico_pontuacoes": {}
 }
 
 ###
