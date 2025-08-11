@@ -168,3 +168,10 @@ export default function CadastroScreen() {
     </LinearGradient>
   );
 }
+
+
+
+
+
+// teste para implementação de uma correção de bug
+

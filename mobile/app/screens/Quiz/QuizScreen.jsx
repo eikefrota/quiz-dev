@@ -118,9 +118,10 @@ export default function QuizScreen() {
       setIndice(indice + 1);
     } else {
       // Vai para a tela de resultado
-      navigation.replace('QuizResultado', {
+           const porcentagemAcertos = ((acertos / perguntas.length) * 100).toFixed(1);
+      navigation.replace("QuizResultado", {
         total: perguntas.length,
-        acertos,
+        acertos: parseFloat(porcentagemAcertos), // Converte de volta para número se necessário
         categoria,
       });
     }
@@ -210,4 +211,3 @@ export default function QuizScreen() {
     </LinearGradient>
   );
 }
-
