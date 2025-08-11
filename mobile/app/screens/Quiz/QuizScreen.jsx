@@ -189,7 +189,7 @@ export default function QuizScreen() {
           zIndex: 10,
           backgroundColor: 'rgba(255,255,255,0.85)',
           borderRadius: 24,
-          padding: 6,
+          padding: 5,
         }}
         onPress={() => navigation.navigate('Temas')}
       >
