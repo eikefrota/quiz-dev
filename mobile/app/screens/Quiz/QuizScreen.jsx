@@ -168,11 +168,12 @@ export default function QuizScreen() {
           if (respostaSelecionada) {
             if (alt.key === alternativaCorreta) {
               borderColor = '#00FF00';
-              backgroundColor = '#f7fff7';
             }
-            if (alt.key === respostaSelecionada && alt.key !== alternativaCorreta) {
-              borderColor = '#FF3B3B';
-              backgroundColor = '#fff7f7';
+            if (alt.key === respostaSelecionada) {
+              backgroundColor = '#f0f0f0'; // branco mais escuro para o selecionado
+              if (alt.key !== alternativaCorreta) {
+                borderColor = '#FF3B3B';
+              }
             }
           }
           return (
