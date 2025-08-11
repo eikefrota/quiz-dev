@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, TouchableOpacity, Image, ActivityIndicator, Animated } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; // Adicione esta linha
 import styles from './QuizScreenStyles';
 import api from '../../api/api';
 
@@ -129,6 +130,21 @@ export default function QuizScreen() {
   if (carregando) {
     return (
       <LinearGradient colors={['#510870', '#a228b0']} style={styles.container}>
+        {/* Botão de sair */}
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            top: 48,
+            left: 18,
+            zIndex: 10,
+            backgroundColor: 'rgba(255,255,255,0.85)',
+            borderRadius: 24,
+            padding: 6,
+          }}
+          onPress={() => navigation.navigate('Temas')}
+        >
+          <Ionicons name="arrow-back" size={28} color="#6B2BAA" />
+        </TouchableOpacity>
         <ActivityIndicator size="large" color="#fff" />
       </LinearGradient>
     );
@@ -137,6 +153,21 @@ export default function QuizScreen() {
   if (!perguntas.length) {
     return (
       <LinearGradient colors={['#510870', '#a228b0']} style={styles.container}>
+        {/* Botão de sair */}
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            top: 48,
+            left: 18,
+            zIndex: 10,
+            backgroundColor: 'rgba(255,255,255,0.85)',
+            borderRadius: 24,
+            padding: 6,
+          }}
+          onPress={() => navigation.navigate('Temas')}
+        >
+          <Ionicons name="arrow-back" size={28} color="#6B2BAA" />
+        </TouchableOpacity>
         <Text style={{ color: '#fff', fontSize: 20, textAlign: 'center' }}>
           Nenhuma pergunta encontrada para este tema.
         </Text>
@@ -149,6 +180,22 @@ export default function QuizScreen() {
 
   return (
     <LinearGradient colors={['#510870', '#a228b0']} style={styles.container}>
+      {/* Botão de sair */}
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: 70,
+          left: 20,
+          zIndex: 10,
+          backgroundColor: 'rgba(255,255,255,0.85)',
+          borderRadius: 24,
+          padding: 5,
+        }}
+        onPress={() => navigation.navigate('Temas')}
+      >
+        <Ionicons name="arrow-back" size={28} color="#6B2BAA" />
+      </TouchableOpacity>
+
       <View style={styles.logoContainer}>
         <Image
           source={require('../../assets/images/logo.png')}
