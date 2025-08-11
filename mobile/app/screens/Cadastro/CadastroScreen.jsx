@@ -32,6 +32,17 @@ export default function CadastroScreen() {
 
   const solicitarOtp = async () => {
     try {
+      // Regex: permite apenas letras (maiúsculas/minúsculas, com acento) e espaços
+      const nomeValido = /^[A-Za-zÀ-ÿ\s]+$/.test(nome);
+      const sobrenomeValido = /^[A-Za-zÀ-ÿ\s]+$/.test(sobrenome);
+      if (!nomeValido) {
+        Alert.alert('Atenção', 'O nome deve conter apenas letras.');
+        return;
+      }
+      if (!sobrenomeValido) {
+        Alert.alert('Atenção', 'O sobrenome deve conter apenas letras.');
+        return;
+      }
       if (!nome || !sobrenome || !email || !senha) {
         Alert.alert('Atenção', 'Preencha todos os campos obrigatórios.');
         return;
