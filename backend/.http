@@ -1,8 +1,6 @@
 ### Listar todos os usuários
 GET http://localhost:3000/api/usuarios
 
-###
-
 ### Buscar usuário por ID
 GET http://localhost:3000/api/usuarios/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJwYWJsb0BnbWFpbC5jb20iLCJub21lIjoiUGFibG8iLCJpYXQiOjE3NTA2MjYwMTksImV4cCI6MTc1MDYyOTYxOX0.Fx43G9oZzCLlvz1L8v_1ocsPQtsZd089-WmDAlcVoTQ
@@ -42,8 +40,6 @@ Content-Type: application/json
     "historico_pontuacoes": []
 }
 
-###
-
 ### Deletar usuário
 DELETE http://localhost:3000/api/usuarios/3
 
@@ -56,5 +52,5 @@ Content-Type: application/json
 
 {
     "email": "pablo@gmail.com",
-    "password": "pablin123"
+    "password": "1234"
 }

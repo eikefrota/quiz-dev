@@ -11,6 +11,12 @@ class UsuarioRepository {
         const result = await db.query(`SELECT * FROM usuario WHERE id = $1`, [id]);
         return result.rows[0] ? new Usuario(result.rows[0]) : null;
     }
+
+    async getByEmail(email) {
+        const result = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
+        console.log("00000000")
+        return result.rows[0]
+    }
     async create({ nome, sobrenome, data_nascimento, email, password, historico_pontuacoes }) {
         // Verifica se já existe usuário com o mesmo email
         const existing = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
@@ -30,7 +36,7 @@ class UsuarioRepository {
     async update(id, dados) {
         // Busca o usuário atual
         const usuarioAtual = await this.getById(id);
-        if (!usuarioAtual) return null;
+        if (!usuarioAtual) return null; 
 
         // Usa os dados enviados ou mantém os antigos
         const nome = dados.nome ?? usuarioAtual.nome;
@@ -47,9 +53,31 @@ class UsuarioRepository {
         return new Usuario(result.rows[0]);
     }
 
-    async remove(id) {
+    async remove(id) {  
         const result = await db.query('DELETE FROM usuario WHERE id = $1 RETURNING *', [id]);
         return result.rows[0] ? new Usuario(result.rows[0]) : null;
+    }
+
+    async incrementarTentativas(email) {
+        await db.query(`
+            UPDATE usuario 
+            SET tentativas_login = tentativas_login + 1
+            WHERE email = $1`, [email]);
+    }
+
+    async resetarTentativas(email) {
+        await db.query(`
+            UPDATE usuario
+            SET tentativas_login = 0, tempo_bloqueio = null
+            WHERE email = $1`, [email]);
+    }
+
+    async bloquearUsuario(email, tempoBloqueioMinutos) {
+        await db.query(`
+            UPDATE usuario
+            SET tempo_bloqueio = NOW() + INTERVAL '${tempoBloqueioMinutos} minutes',
+            tentativas_login = 0
+            WHERE email = $1`, [email])
     }
 }
 

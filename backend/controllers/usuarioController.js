@@ -1,8 +1,6 @@
-const db = require('../db/db');
+
 const usuarioService = require('../services/usuarioService');
-const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
-const emailService = require('../services/emailService');
+const otpService = require('../services/otpService');
 
 class UsuarioController {
     async getAll(req, res) {
@@ -82,65 +80,41 @@ class UsuarioController {
         }
     }
 
-    async solicitarOtp(req, res) {
-        const { email } = req.body;
-
-        // Verifica se já existe usuário com o mesmo email
-        const existing = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
-        if (existing.rows.length > 0) {
-            return res.status(400).json({ error: 'Email já cadastrado' });
+        async solicitarOtp(req, res) {
+            try {
+                const { email } = req.body;                
+                    if (!email) {
+                        return res.status(400).json ({error: 'Email é obrigatorio'})
+                    }
+                await otpService.solicitarOtp(email);
+                res.status(200).json({ message: 'OTP enviada para o seu e-mail'})
+            } catch (error) {
+                res.status(400).json({ erro: error.message });
+            }
         }
-
-        const otp = Math.floor(100000 + Math.random() * 900000).toString();
-
-        // Salva ou atualiza o OTP no banco
-        await db.query(
-            `CREATE TABLE IF NOT EXISTS otps (
-                email VARCHAR(100) PRIMARY KEY,
-                otp VARCHAR(10) NOT NULL,
-                criado_em TIMESTAMP DEFAULT NOW()
-            )`
-        );
-        await db.query(
-            `INSERT INTO otps (email, otp) VALUES ($1, $2)
-             ON CONFLICT (email) DO UPDATE SET otp = $2, criado_em = NOW()`,
-            [email, otp]
-        );
-
-        await emailService(email, otp);
-        res.status(200).json({ message: 'OTP enviado para o e-mail.' });
-    }
-
     async verificarOtp(req, res) {
-        const { email, otp, nome, sobrenome, data_nascimento, password } = req.body;
-
-        // Verifica se já existe usuário com o mesmo email
-        const existing = await db.query('SELECT * FROM usuario WHERE email = $1', [email]);
-        if (existing.rows.length > 0) {
-            return res.status(400).json({ error: 'Email já cadastrado' });
+        try {
+            const { email, otp } = req.body;
+            const token = await otpService.verificarOtp(email, otp);
+            return res.status(200).json({ token })
+        } catch (error) {
+            return res.status(400).json({ error: error.message})
         }
+    }
+    async login(req, res) {
+        try {
+            const { email, senha } = req.body;
 
-        const result = await db.query('SELECT otp FROM otps WHERE email = $1', [email]);
-        const otpEsperado = result.rows[0]?.otp;
+            if (!email || !senha) {
+                return res.status(400).json({message: 'Email e senha são obrigatorios'});
+            }
 
-        if (otpEsperado === otp) {
-            await db.query('DELETE FROM otps WHERE email = $1', [email]);
-            const usuario = await usuarioService.create({
-                nome,
-                sobrenome,
-                data_nascimento,
-                email,
-                password,
-                historico_pontuacoes: {}
-            });
-            const token = jwt.sign(
-                { id: usuario.id, email: usuario.email, nome: usuario.nome },
-                JWT_SECRET,
-                { expiresIn: '1h' }
-            );
-            return res.status(201).json({ message: 'Usuário criado com sucesso', token, usuario });
-        } else {
-            return res.status(400).json({ message: 'OTP inválido.' });
+            const result = await usuarioService.login( email, senha );
+
+            
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(error.status || 500).json({ message: error.message || 'Erro ao efetuar login'});
         }
     }
 }
