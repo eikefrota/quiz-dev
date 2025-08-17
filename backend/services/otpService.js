@@ -33,4 +33,4 @@ class OtpService {
     };
 
 
-module.exports = OtpService;
+module.exports = new OtpService();
