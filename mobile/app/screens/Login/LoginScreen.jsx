@@ -26,6 +26,7 @@ export default function LoginScreen() {
       if (response.status === 200) {
         await AsyncStorage.setItem('usuario', JSON.stringify(response.data.usuario));
         await AsyncStorage.setItem('token', response.data.token);
+        await AsyncStorage.setItem('userId', String(response.data.usuario.id)); // ou ._id, conforme seu backend
         navigation.reset({
           index: 0,
           routes: [{ name: 'MainTabs' }],

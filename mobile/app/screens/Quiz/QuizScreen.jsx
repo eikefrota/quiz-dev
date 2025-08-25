@@ -120,7 +120,7 @@ export default function QuizScreen() {
 
       const porcentagemAcertos = ((acertos / perguntas.length) * 100).toFixed(2);
       // Vai para a tela de resultado
-      const userId = 1; // Substitua pelo ID real do usuário
+      const userId = await AsyncStorage.getItem('userId'); // Substitua pelo ID real do usuário
       api.post('/pontuacoes', {
       userId,
       categoria,
@@ -132,7 +132,7 @@ export default function QuizScreen() {
 
     navigation.replace("QuizResultado", {
       total: perguntas.length,
-      acertos: parseFloat(porcentagemAcertos),
+      acertos,
       categoria,
       });
     }
