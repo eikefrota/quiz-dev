@@ -4,5 +4,5 @@ const api = axios.create({
   baseURL: 'http://10.0.0.9:3000/api',
 });
 
-export default api;
 
+export default api;

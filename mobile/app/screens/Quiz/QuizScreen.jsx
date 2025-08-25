@@ -110,22 +110,34 @@ export default function QuizScreen() {
     return () => clearTimeout(delayRef.current);
   }, [respostaSelecionada]);
 
-  function avancarPergunta() {
+  async function avancarPergunta() {
     setRespostaSelecionada(null);
     setTempo(8);
     tempoAnimado.setValue(1);
     if (indice < perguntas.length - 1) {
       setIndice(indice + 1);
     } else {
+
+      const porcentagemAcertos = ((acertos / perguntas.length) * 100).toFixed(2);
       // Vai para a tela de resultado
-           const porcentagemAcertos = ((acertos / perguntas.length) * 100).toFixed(1);
-      navigation.replace("QuizResultado", {
-        total: perguntas.length,
-        acertos: parseFloat(porcentagemAcertos), // Converte de volta para número se necessário
-        categoria,
+      const userId = 1; // Substitua pelo ID real do usuário
+      api.post('/pontuacoes', {
+      userId,
+      categoria,
+      acertos,
+      total: perguntas.length,
+      porcentagem: parseFloat(porcentagemAcertos),
+      data: new Date().toISOString(),
+    }).catch(() => {});
+
+    navigation.replace("QuizResultado", {
+      total: perguntas.length,
+      acertos: parseFloat(porcentagemAcertos),
+      categoria,
       });
     }
   }
+
 
   if (carregando) {
     return (
